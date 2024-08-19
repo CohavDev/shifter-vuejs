@@ -4,7 +4,7 @@ export default function getData(
 ) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch("/api/readData", {
+      const response = await fetch("http://localhost:8080/api/getData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
