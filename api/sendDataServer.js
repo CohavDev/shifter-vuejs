@@ -1,15 +1,33 @@
+import express from "express";
+import cors from "cors";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
-export default async function handler(req, res) {
+const MONGODB_URI =
+  "mongodb+srv://shaulc:admin1234@cluster0.ywdnz4v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const app = express();
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+app.use(express.json());
+app.listen(8080, () => {
+  console.log("Server listening on port 8080");
+});
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+app.post("/api/sendData", async (req, res) => {
+  console.log(req.body);
   const { date, selection, userName } = req.body;
   var client;
   if (!date || !selection || !userName) {
     return res.status(400).json({ message: "Missing required fields" });
   }
   try {
-    console.log("env var = ", process.env.MONGODB_URI);
-    client = new MongoClient(process.env.MONGODB_URI);
+    console.log("env var = ", MONGODB_URI);
+    client = new MongoClient(MONGODB_URI);
     await client.connect();
     const db = client.db("store");
     const collection = db.collection("shifts");
@@ -23,4 +41,4 @@ export default async function handler(req, res) {
   } finally {
     if (client) await client.close();
   }
-}
+});
