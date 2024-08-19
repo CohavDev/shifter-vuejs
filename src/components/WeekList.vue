@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import DayItem from "./DayItem.vue";
 import getDates from "@/utilities/dateTool";
 import sendData from "@/utilities/dataSubmitter";
+import getData from "@/utilities/dataRetriever";
+const USER_NAME = "Odeliya";
 const fetchedDates = getDates();
 const sundayDateFormatted = fetchedDates.sundayDateFormatted;
 const saturadayFormatted = fetchedDates.saturadayFormatted;
@@ -12,7 +14,7 @@ function selectByDay(day: number, sel: number) {
   selection.value[day - 1] = sel;
 }
 function sendSelection() {
-  sendData(sundayDateFormatted, selection.value, "Odeliya")
+  sendData(sundayDateFormatted, selection.value, USER_NAME)
     .then(() => {
       //success
       console.log("success sending data to server");
@@ -23,6 +25,17 @@ function sendSelection() {
       dbMessage.value = "שגיאה בשליחת הנתונים";
     });
 }
+onMounted(() => {
+  console.log("mounted");
+  getData(sundayDateFormatted, USER_NAME)
+    .then((data) => {
+      console.log("selection", data);
+      selection.value = data;
+    })
+    .catch(() => {
+      console.log("failed reading data from server");
+    });
+});
 </script>
 <template>
   <div class="header">
