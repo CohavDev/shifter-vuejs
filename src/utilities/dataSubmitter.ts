@@ -11,7 +11,7 @@ export default function sendData(
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ date, formattedSelection, userName }),
+        body: JSON.stringify({ "date":date, "selection":formattedSelection, "userName":userName }),
       });
       if (!response.ok) {
         throw new Error("Error submitting data");
