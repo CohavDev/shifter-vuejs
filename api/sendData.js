@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
-dotenv.config();
+
 export default async function handler(req, res) {
   const { date, selection, userName } = req.body;
   if (!date || !selection || !userName) {
