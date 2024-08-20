@@ -29,6 +29,12 @@ async function fetchData() {
   await getData(sundayDateFormatted, USER_NAME)
     .then((data) => {
       console.log("selection", data);
+      if (
+        !Array.isArray(data) ||
+        data.some((item) => typeof item !== "number")
+      ) {
+        throw new TypeError("server's data is not of type number[]");
+      }
       selection.value = data;
     })
     .catch(() => {
