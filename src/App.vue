@@ -8,8 +8,8 @@ import WeekList from "./components/WeekList.vue";
       alt="Vue logo"
       class="logo"
       src="./assets/logo.svg"
-      width="125"
-      height="125"
+      width="48"
+      height="48"
     />
 
     <!-- <div class="wrapper">
