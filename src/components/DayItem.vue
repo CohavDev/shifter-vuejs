@@ -29,7 +29,6 @@ const getButtonColor = (buttonId: number) => {
   <div class="container">
     <h2>{{ getDayName(props.day) }}</h2>
     <div class="containerButtons">
-      <p>value = {{ props.value }}, {{ selection }}</p>
       <button :class="getButtonColor(0)" @click="selection = 0">בוקר</button>
       <button :class="getButtonColor(1)" @click="selection = 1">צהריים</button>
       <button :class="getButtonColor(2)" @click="selection = 2">ערב</button>
@@ -43,18 +42,20 @@ const getButtonColor = (buttonId: number) => {
   flex-direction: row-reverse;
   align-items: center;
 }
+.containerButtons {
+  justify-content: space-evenly;
+  width: 70%;
+}
 .container {
   justify-content: space-between;
   background-color: white;
   margin: 5px;
-  padding-right: 10px;
-  padding-left: 10px;
   border-radius: 4px;
   padding: 10px;
 }
 .timeButton,
 .timeButton_pressed {
-  width: 96px;
+  width: 100%;
   height: 48px;
   margin: 5px;
   border-radius: 10px;
