@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import DayItem from "./DayItem.vue";
+import Switch from "./Switch.vue";
 import getDates from "@/utilities/dateTool";
 import sendData from "@/utilities/dataSubmitter";
 import getData from "@/utilities/dataRetriever";
-const USER_NAME = "Odeliya";
+
+const userName = ref("Odeliya");
 const fetchedDates = getDates();
 const sundayDateFormatted = fetchedDates.sundayDateFormatted;
 const saturadayFormatted = fetchedDates.saturadayFormatted;
 const selection = ref([0, 0, 0, 0, 0, 0, 0]);
 const dbMessage = ref("");
+watch(userName, () => {
+  fetchData();
+});
 function selectByDay(day: number, sel: number) {
   selection.value[day - 1] = sel;
 }
 function sendSelection() {
-  sendData(sundayDateFormatted, selection.value, USER_NAME)
+  sendData(sundayDateFormatted, selection.value, userName.value)
     .then(() => {
       //success
       console.log("success sending data to server");
@@ -26,7 +31,7 @@ function sendSelection() {
     });
 }
 async function fetchData() {
-  await getData(sundayDateFormatted, USER_NAME)
+  await getData(sundayDateFormatted, userName.value)
     .then((data) => {
       console.log("selection", data);
       selection.value = data;
@@ -41,6 +46,7 @@ fetchData();
   <div class="header">
     <h1>{{ sundayDateFormatted }} - {{ saturadayFormatted }}</h1>
   </div>
+  <Switch @change="(val:string) => (userName = val)" />
   <div class="container">
     <DayItem
       day="1"
