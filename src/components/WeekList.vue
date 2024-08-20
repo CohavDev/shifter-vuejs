@@ -25,9 +25,8 @@ function sendSelection() {
       dbMessage.value = "שגיאה בשליחת הנתונים";
     });
 }
-onMounted(() => {
-  console.log("mounted");
-  getData(sundayDateFormatted, USER_NAME)
+async function fetchData() {
+  await getData(sundayDateFormatted, USER_NAME)
     .then((data) => {
       console.log("selection", data);
       selection.value = data;
@@ -35,20 +34,49 @@ onMounted(() => {
     .catch(() => {
       console.log("failed reading data from server");
     });
-});
+}
+fetchData();
 </script>
 <template>
   <div class="header">
     <h1>{{ sundayDateFormatted }} - {{ saturadayFormatted }}</h1>
   </div>
   <div class="container">
-    <DayItem day="1" @select="(sel) => selectByDay(1, sel)" />
-    <DayItem day="2" @select="(sel) => selectByDay(2, sel)" />
-    <DayItem day="3" @select="(sel) => selectByDay(3, sel)" />
-    <DayItem day="4" @select="(sel) => selectByDay(4, sel)" />
-    <DayItem day="5" @select="(sel) => selectByDay(5, sel)" />
-    <DayItem day="6" @select="(sel) => selectByDay(6, sel)" />
-    <DayItem day="7" @select="(sel) => selectByDay(7, sel)" />
+    <DayItem
+      day="1"
+      @select="(sel) => selectByDay(1, sel)"
+      :value="selection[0]"
+    />
+    <DayItem
+      day="2"
+      @select="(sel) => selectByDay(2, sel)"
+      :value="selection[1]"
+    />
+    <DayItem
+      day="3"
+      @select="(sel) => selectByDay(3, sel)"
+      :value="selection[2]"
+    />
+    <DayItem
+      day="4"
+      @select="(sel) => selectByDay(4, sel)"
+      :value="selection[3]"
+    />
+    <DayItem
+      day="5"
+      @select="(sel) => selectByDay(5, sel)"
+      :value="selection[4]"
+    />
+    <DayItem
+      day="6"
+      @select="(sel) => selectByDay(6, sel)"
+      :value="selection[5]"
+    />
+    <DayItem
+      day="7"
+      @select="(sel) => selectByDay(7, sel)"
+      :value="selection[6]"
+    />
     <button @click="sendSelection">שלח נתונים</button>
     <p>{{ dbMessage }}</p>
   </div>
