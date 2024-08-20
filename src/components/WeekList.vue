@@ -5,6 +5,7 @@ import Switch from "./Switch.vue";
 import getDates from "@/utilities/dateTool";
 import sendData from "@/utilities/dataSubmitter";
 import getData from "@/utilities/dataRetriever";
+import Loading from "./Loading.vue";
 
 const userName = ref("Odeliya");
 const fetchedDates = getDates();
@@ -12,6 +13,7 @@ const sundayDateFormatted = fetchedDates.sundayDateFormatted;
 const saturadayFormatted = fetchedDates.saturadayFormatted;
 const selection = ref([0, 0, 0, 0, 0, 0, 0]);
 const dbMessage = ref("");
+const loading = ref(true);
 watch(userName, () => {
   fetchData();
 });
@@ -19,6 +21,7 @@ function selectByDay(day: number, sel: number) {
   selection.value[day - 1] = sel;
 }
 function sendSelection() {
+  loading.value = true;
   sendData(sundayDateFormatted, selection.value, userName.value)
     .then(() => {
       //success
@@ -28,13 +31,18 @@ function sendSelection() {
     .catch(() => {
       console.log("failed sending data to server");
       dbMessage.value = "שגיאה בשליחת הנתונים";
+    })
+    .finally(() => {
+      loading.value = false;
     });
 }
 async function fetchData() {
+  loading.value = true;
   await getData(sundayDateFormatted, userName.value)
     .then((data) => {
       console.log("selection", data);
       selection.value = data;
+      loading.value = false;
     })
     .catch(() => {
       console.log("failed reading data from server");
@@ -46,6 +54,7 @@ fetchData();
   <div class="header">
     <h1>{{ sundayDateFormatted }} - {{ saturadayFormatted }}</h1>
   </div>
+  <Loading :isVisible="loading" />
   <Switch @change="(val:string) => (userName = val)" />
   <div class="container">
     <DayItem
