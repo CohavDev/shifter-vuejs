@@ -1,7 +1,7 @@
 export default function getData(
   date: string,
   userName: string
-) {
+):Promise<number[]> {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch("http://localhost:8080/api/getData", {
@@ -24,5 +24,7 @@ export default function getData(
   });
 }
 function parseSelectionArray(selection: String) {
-  return selection.split(",");
+  const splitedArray =  selection.split(",");
+  const parsedArray = splitedArray.map((item) => parseInt(item));
+  return parsedArray;
 }
