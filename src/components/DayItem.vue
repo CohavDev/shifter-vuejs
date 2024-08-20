@@ -1,18 +1,25 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
 const emit = defineEmits(["select"]);
-const props = defineProps(["day"]);
+const props = defineProps(["day", "value"]);
 const getDayName = (id: number) => {
   const days = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
   return days[id - 1];
 };
-const selection = ref(0);
+const selection = ref(props.value);
 watch(selection, () => {
   emit("select", selection.value);
 });
+watch(
+  () => props.value,
+  () => {
+    console.log("props value changed");
+    selection.value = props.value;
+  }
+);
 const getButtonColor = (buttonId: number) => {
-  if (buttonId === selection.value) {
+  if (buttonId == selection.value) {
     return "timeButton_pressed";
   }
   return "timeButton";
@@ -22,6 +29,7 @@ const getButtonColor = (buttonId: number) => {
   <div class="container">
     <h2>{{ getDayName(props.day) }}</h2>
     <div class="containerButtons">
+      <p>value = {{ props.value }}, {{ selection }}</p>
       <button :class="getButtonColor(0)" @click="selection = 0">בוקר</button>
       <button :class="getButtonColor(1)" @click="selection = 1">צהריים</button>
       <button :class="getButtonColor(2)" @click="selection = 2">ערב</button>
