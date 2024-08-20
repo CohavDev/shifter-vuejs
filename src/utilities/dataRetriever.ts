@@ -1,11 +1,10 @@
 export default function getData(
   date: string,
   userName: string
-) {
+):Promise<number[]> {
   return new Promise(async (resolve, reject) => {
     try {
-      //hello from branch main
-      const response = await fetch("/api/readData", {
+      const response = await fetch("http://localhost:8080/api/getData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,5 +24,7 @@ export default function getData(
   });
 }
 function parseSelectionArray(selection: String) {
-  return selection.split(",");
+  const splitedArray =  selection.split(",");
+  const parsedArray = splitedArray.map((item) => parseInt(item));
+  return parsedArray;
 }
