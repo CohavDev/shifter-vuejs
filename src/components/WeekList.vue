@@ -6,6 +6,7 @@ import getDates from "@/utilities/dateTool";
 import sendData from "@/utilities/dataSubmitter";
 import getData from "@/utilities/dataRetriever";
 import Loading from "./Loading.vue";
+import DateHeader from "./DateHeader.vue";
 
 const userName = ref("Odeliya");
 const weeksOffset = ref(0);
@@ -16,8 +17,9 @@ const selection = ref([0, 0, 0, 0, 0, 0, 0]);
 const dbMessage = ref("");
 const loading = ref(true);
 watch(userName, () => {
-  fetchData();
+  //TODO: use computed
 });
+watch(weeksOffset, () => {});
 function selectByDay(day: number, sel: number) {
   selection.value[day - 1] = sel;
 }
@@ -52,9 +54,11 @@ async function fetchData() {
 fetchData();
 </script>
 <template>
-  <div class="header">
-    <h1>{{ sundayDateFormatted }} - {{ saturadayFormatted }}</h1>
-  </div>
+  <DateHeader
+    :firstDay="sundayDateFormatted"
+    :lastDay="saturadayFormatted"
+    @changeWeek="() => weeksOffset++"
+  />
   <Loading :isVisible="loading" />
   <Switch @change="(val:string) => (userName = val)" />
   <div class="container">
