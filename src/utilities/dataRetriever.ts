@@ -4,7 +4,7 @@ export default function getData(
 ):Promise<number[]> {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch("http://localhost:8080/api/getData", {
+      const response = await fetch("/api/getData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
