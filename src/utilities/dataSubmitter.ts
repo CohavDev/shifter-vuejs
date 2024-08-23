@@ -6,12 +6,16 @@ export default function sendData(
   return new Promise(async (resolve, reject) => {
     try {
       const formattedSelection = parseSelectionArray(selection);
-      const response = await fetch("/api/sendData", {
+      const response = await fetch("https://localhost:8080/api/sendData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "date":date, "selection":formattedSelection, "userName":userName }),
+        body: JSON.stringify({
+          date: date,
+          selection: formattedSelection,
+          userName: userName,
+        }),
       });
       if (!response.ok) {
         throw new Error("Error submitting data");

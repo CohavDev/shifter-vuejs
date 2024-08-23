@@ -8,7 +8,8 @@ import getData from "@/utilities/dataRetriever";
 import Loading from "./Loading.vue";
 
 const userName = ref("Odeliya");
-const fetchedDates = getDates();
+const weeksOffset = ref(0);
+const fetchedDates = getDates(weeksOffset.value);
 const sundayDateFormatted = fetchedDates.sundayDateFormatted;
 const saturadayFormatted = fetchedDates.saturadayFormatted;
 const selection = ref([0, 0, 0, 0, 0, 0, 0]);
