@@ -12,6 +12,10 @@ export default function getData(
         body: JSON.stringify({ date: date, userName: userName }),
       });
       if (!response.ok) {
+        if (response.status === 404) {
+          //TODO: handle creation of new doc?
+          throw new Error("Data not found");
+        }
         throw new Error("Error reading data");
       }
       const data = await response.json();

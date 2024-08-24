@@ -13,6 +13,11 @@ export default async function handler(req, res) {
     const db = client.db("store");
     const collection = db.collection("shifts");
     const result = await collection.findOne({ date, userName });
+    if (!result) {
+      res.status(404).json({
+        message: "Data not found",
+      });
+    }
     res.status(200).json({
       message: "Data retrieved succesfully",
       id: result.insertedId,

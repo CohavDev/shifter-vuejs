@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import DayItem from "./DayItem.vue";
 import Switch from "./Switch.vue";
 import getDates from "@/utilities/dateTool";
@@ -10,22 +10,31 @@ import DateHeader from "./DateHeader.vue";
 
 const userName = ref("Odeliya");
 const weeksOffset = ref(0);
-const fetchedDates = getDates(weeksOffset.value);
-const sundayDateFormatted = fetchedDates.sundayDateFormatted;
-const saturadayFormatted = fetchedDates.saturadayFormatted;
+const fetchedDates = ref(getDates(weeksOffset.value));
+const sundayDateFormatted = computed(
+  () => fetchedDates.value.sundayDateFormatted
+);
+const saturadayFormatted = computed(
+  () => fetchedDates.value.saturadayFormatted
+);
 const selection = ref([0, 0, 0, 0, 0, 0, 0]);
 const dbMessage = ref("");
 const loading = ref(true);
-watch(userName, () => {
-  //TODO: use computed
+// watch(userName, () => {
+//   //TODO: use computed
+// });
+watch(weeksOffset, () => {
+  fetchedDates.value = getDates(weeksOffset.value);
 });
-watch(weeksOffset, () => {});
+watch(sundayDateFormatted, () => {
+  fetchData();
+});
 function selectByDay(day: number, sel: number) {
   selection.value[day - 1] = sel;
 }
 function sendSelection() {
   loading.value = true;
-  sendData(sundayDateFormatted, selection.value, userName.value)
+  sendData(sundayDateFormatted.value, selection.value, userName.value)
     .then(() => {
       //success
       console.log("success sending data to server");
@@ -41,7 +50,7 @@ function sendSelection() {
 }
 async function fetchData() {
   loading.value = true;
-  await getData(sundayDateFormatted, userName.value)
+  await getData(sundayDateFormatted.value, userName.value)
     .then((data) => {
       console.log("selection", data);
       selection.value = data;
