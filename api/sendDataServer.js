@@ -71,6 +71,7 @@ app.post("/api/readData", async (req, res) => {
       res.status(404).json({
         message: "Data not found",
       });
+      return;
     }
     res.status(200).json({
       message: "Data retrieved succesfully",

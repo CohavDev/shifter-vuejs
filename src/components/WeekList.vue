@@ -20,9 +20,9 @@ const saturadayFormatted = computed(
 const selection = ref([0, 0, 0, 0, 0, 0, 0]);
 const dbMessage = ref("");
 const loading = ref(true);
-// watch(userName, () => {
-//   //TODO: use computed
-// });
+watch(userName, () => {
+  fetchData();
+});
 watch(weeksOffset, () => {
   fetchedDates.value = getDates(weeksOffset.value);
 });

@@ -1,3 +1,5 @@
+import sendData from "./dataSubmitter";
+const defaultSelection = [0, 0, 0, 0, 0, 0, 0];
 export default function getData(
   date: string,
   userName: string
@@ -13,10 +15,17 @@ export default function getData(
       });
       if (!response.ok) {
         if (response.status === 404) {
-          //TODO: handle creation of new doc?
-          throw new Error("Data not found");
+          // Handle creation of new doc
+          await sendData(date, defaultSelection, userName)
+            .then(() => {
+              resolve(defaultSelection);
+            })
+            .catch((err) => {
+              throw new Error("Error when creating new doc: " + err);
+            });
+        } else {
+          throw new Error("Error reading data");
         }
-        throw new Error("Error reading data");
       }
       const data = await response.json();
       const formattedSelection = parseSelectionArray(data.selection);
