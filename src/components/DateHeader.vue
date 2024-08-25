@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 const props = defineProps(["firstDay", "lastDay"]);
-const emit = defineEmits(["changeWeek"]);
+const emit = defineEmits(["prevWeek", "nextWeek"]);
 const firstDay = ref(props.firstDay);
 const lastDay = ref(props.lastDay);
 console.log("first day = ", firstDay.value);
@@ -16,7 +16,8 @@ watch(
 <template>
   <div class="header">
     <h1>{{ firstDay }} - {{ lastDay }}</h1>
-    <button @click="emit('changeWeek')">הבא</button>
+    <button @click="emit('nextWeek')">הבא</button>
+    <button @click="emit('prevWeek')">הקודם</button>
   </div>
 </template>
 <style scoped>

@@ -24,6 +24,14 @@ watch(userName, () => {
   fetchData();
 });
 watch(weeksOffset, () => {
+  if (weeksOffset.value > 4 || weeksOffset.value < -4) {
+    weeksOffset.value = 0;
+    dbMessage.value = "אי אפשר לבחור תאריך רחוק יותר מכחודש";
+    //Display error message
+    setTimeout(() => {
+      dbMessage.value = "";
+    }, 4000);
+  }
   fetchedDates.value = getDates(weeksOffset.value);
 });
 watch(sundayDateFormatted, () => {
@@ -66,7 +74,8 @@ fetchData();
   <DateHeader
     :firstDay="sundayDateFormatted"
     :lastDay="saturadayFormatted"
-    @changeWeek="() => weeksOffset++"
+    @nextWeek="() => weeksOffset++"
+    @prevWeek="() => weeksOffset--"
   />
   <Loading :isVisible="loading" />
   <Switch @change="(val:string) => (userName = val)" />
