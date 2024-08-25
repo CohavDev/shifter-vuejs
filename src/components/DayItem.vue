@@ -8,6 +8,13 @@ const getDayName = (id: number) => {
   return days[id - 1];
 };
 const selection = ref(props.value);
+function changeSelection(newSelection: number) {
+  if (selection.value == newSelection) {
+    selection.value = -1;
+  } else {
+    selection.value = newSelection;
+  }
+}
 watch(selection, () => {
   emit("select", selection.value);
 });
@@ -29,9 +36,15 @@ const getButtonColor = (buttonId: number) => {
   <div class="container">
     <h2>{{ getDayName(props.day) }}</h2>
     <div class="containerButtons">
-      <button :class="getButtonColor(0)" @click="selection = 0">בוקר</button>
-      <button :class="getButtonColor(1)" @click="selection = 1">צהריים</button>
-      <button :class="getButtonColor(2)" @click="selection = 2">ערב</button>
+      <button :class="getButtonColor(0)" @click="changeSelection(0)">
+        בוקר
+      </button>
+      <button :class="getButtonColor(1)" @click="changeSelection(1)">
+        צהריים
+      </button>
+      <button :class="getButtonColor(2)" @click="changeSelection(2)">
+        ערב
+      </button>
     </div>
   </div>
 </template>
