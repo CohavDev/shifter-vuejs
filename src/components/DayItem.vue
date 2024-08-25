@@ -66,10 +66,12 @@ const getButtonColor = (buttonId: number) => {
   background-color: #979797;
 }
 .timeButton_pressed {
-  background-color: #6c88e2;
+  background-color: #6629f6;
+  color: white;
+  font-weight: bold;
 }
 .timeButton_pressed:hover {
-  background-color: #526ecc;
+  background-color: #531cd4;
 }
 
 h2 {
