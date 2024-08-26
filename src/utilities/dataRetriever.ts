@@ -15,14 +15,8 @@ export default function getData(
       });
       if (!response.ok) {
         if (response.status === 404) {
-          // Handle creation of new doc
-          await sendData(date, defaultSelection, userName)
-            .then(() => {
-              resolve(defaultSelection);
-            })
-            .catch((err) => {
-              throw new Error("Error when creating new doc: " + err);
-            });
+          // Handle creation of new doc locally
+          resolve(defaultSelection)
         } else {
           throw new Error("Error reading data");
         }
