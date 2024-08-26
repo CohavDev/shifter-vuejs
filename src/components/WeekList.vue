@@ -17,7 +17,15 @@ const sundayDateFormatted = computed(
 const saturadayFormatted = computed(
   () => fetchedDates.value.saturadayFormatted
 );
-const selection = ref([0, 0, 0, 0, 0, 0, 0]);
+const selection = ref([
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+]);
 const dbMessage = ref("");
 const loading = ref(true);
 watch(userName, () => {
@@ -37,7 +45,7 @@ watch(weeksOffset, () => {
 watch(sundayDateFormatted, () => {
   fetchData();
 });
-function selectByDay(day: number, sel: number) {
+function selectByDay(day: number, sel: number[]) {
   selection.value[day - 1] = sel;
 }
 function sendSelection() {

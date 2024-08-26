@@ -7,12 +7,12 @@ const getDayName = (id: number) => {
   const days = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
   return days[id - 1];
 };
-const selection = ref(props.value);
-function changeSelection(newSelection: number) {
-  if (selection.value == newSelection) {
-    selection.value = -1;
+const selection = ref(props.value); // [X,X,X]
+function changeSelection(index: number) {
+  if (selection.value[index] == 1) {
+    selection.value[index] = 0;
   } else {
-    selection.value = newSelection;
+    selection.value[index] = 1;
   }
 }
 watch(selection, () => {
@@ -26,7 +26,7 @@ watch(
   }
 );
 const getButtonColor = (buttonId: number) => {
-  if (buttonId == selection.value) {
+  if (selection.value[buttonId] == 1) {
     return "timeButton_pressed";
   }
   return "timeButton";
