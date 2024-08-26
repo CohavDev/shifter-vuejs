@@ -7,6 +7,7 @@ import sendData from "@/utilities/dataSubmitter";
 import getData from "@/utilities/dataRetriever";
 import Loading from "./Loading.vue";
 import DateHeader from "./DateHeader.vue";
+import Toast from "./Toast.vue";
 
 const userName = ref("Odeliya");
 const weeksOffset = ref(0);
@@ -123,9 +124,10 @@ fetchData();
       @select="(sel) => selectByDay(7, sel)"
       :value="selection[6]"
     />
-    <button @click="sendSelection">שלח נתונים</button>
+    <v-btn class="send_btn" @click="sendSelection">שלח נתונים</v-btn>
     <p>{{ dbMessage }}</p>
   </div>
+  <Toast />
 </template>
 <style scoped>
 .container {
@@ -136,6 +138,9 @@ fetchData();
   justify-content: center;
   direction: rtl;
   align-items: center;
+}
+.send_btn:hover {
+  background-color: aqua;
 }
 h1 {
   color: #dde5d9;

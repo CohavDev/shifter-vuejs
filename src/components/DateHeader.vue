@@ -15,9 +15,9 @@ watch(
 </script>
 <template>
   <div class="header">
-    <button @click="emit('prevWeek')">הקודם</button>
+    <v-btn @click="emit('prevWeek')">הקודם</v-btn>
     <h1>{{ firstDay }} - {{ lastDay }}</h1>
-    <button @click="emit('nextWeek')">הבא</button>
+    <v-btn @click="emit('nextWeek')">הבא</v-btn>
   </div>
 </template>
 <style scoped>
