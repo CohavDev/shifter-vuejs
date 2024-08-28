@@ -33,7 +33,7 @@ const getButtonColor = (buttonId: number) => {
 };
 </script>
 <template>
-  <div class="container">
+  <div class="containerItem">
     <h2>{{ getDayName(props.day) }}</h2>
     <div class="containerButtons">
       <button :class="getButtonColor(0)" @click="changeSelection(0)">
@@ -49,7 +49,7 @@ const getButtonColor = (buttonId: number) => {
   </div>
 </template>
 <style scoped>
-.container,
+.containerItem,
 .containerButtons {
   display: flex;
   flex-direction: row-reverse;
@@ -58,13 +58,14 @@ const getButtonColor = (buttonId: number) => {
 .containerButtons {
   justify-content: space-evenly;
   width: 70%;
+  padding-left: 5px;
 }
-.container {
+.containerItem {
   justify-content: space-between;
   background-color: white;
   margin: 5px;
-  border-radius: 4px;
-  padding: 10px;
+  border-radius: 7px;
+  padding-right: 10px;
 }
 .timeButton,
 .timeButton_pressed {

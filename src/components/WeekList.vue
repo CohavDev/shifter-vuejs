@@ -124,7 +124,9 @@ fetchData();
       @select="(sel) => selectByDay(7, sel)"
       :value="selection[6]"
     />
-    <v-btn class="send_btn" @click="sendSelection">שלח נתונים</v-btn>
+    <v-btn variant="outlined" class="send_btn" @click="sendSelection"
+      >שלח נתונים</v-btn
+    >
     <p>{{ dbMessage }}</p>
   </div>
   <Toast />
@@ -132,6 +134,9 @@ fetchData();
 <style scoped>
 .container {
   gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center horizontally */
 }
 .header {
   display: flex;
@@ -139,10 +144,18 @@ fetchData();
   direction: rtl;
   align-items: center;
 }
+.send_btn {
+  color: #69dc30;
+  font-size: 1rem;
+}
 .send_btn:hover {
   background-color: aqua;
 }
 h1 {
   color: #dde5d9;
+}
+p {
+  color: #88ebae;
+  font-size: 1rem;
 }
 </style>
