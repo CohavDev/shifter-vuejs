@@ -7,8 +7,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: "Missing required fields" });
   }
   try {
-    console.log("env var = ", MONGODB_URI);
-    client = new MongoClient(MONGODB_URI);
+    console.log("env var = ", process.env.MONGODB_URI);
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
     const db = client.db("store");
     const collection = db.collection("shifts");
