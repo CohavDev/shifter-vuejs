@@ -1,12 +1,20 @@
 import sendData from "./dataSubmitter";
-const defaultSelection = [[0,0,0], [0,0,0], [0,0,0], [0,0,0], [0,0,0], [0,0,0], [0,0,0]];
+const defaultSelection = [
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
+];
 export default function getData(
   date: string,
   userName: string
 ): Promise<number[][]> {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch("http://localhost:8080/api/readData", {
+      const response = await fetch("api/readData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -16,7 +24,7 @@ export default function getData(
       if (!response.ok) {
         if (response.status === 404) {
           // Handle creation of new doc locally
-          resolve(defaultSelection)
+          resolve(defaultSelection);
         } else {
           throw new Error("Error reading data");
         }
