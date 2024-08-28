@@ -6,7 +6,7 @@ export default function sendData(
   return new Promise(async (resolve, reject) => {
     try {
       // const formattedSelection = parseSelectionArray(selection);
-      const response = await fetch("/api/sendData", {
+      const response = await fetch("http://localhost:8080/api/sendData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
