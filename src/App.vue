@@ -3,7 +3,7 @@ import WeekList from "./components/WeekList.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img
       alt="Vue logo"
       class="logo"
@@ -15,7 +15,7 @@ import WeekList from "./components/WeekList.vue";
     <!-- <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div> -->
-  </header>
+  </header> -->
 
   <main>
     <WeekList />
