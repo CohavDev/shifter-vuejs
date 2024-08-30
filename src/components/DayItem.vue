@@ -7,7 +7,14 @@ const getDayName = (id: number) => {
   const days = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
   return days[id - 1];
 };
-const selection = ref(props.value);
+const selection = ref(props.value); // [X,X,X]
+function changeSelection(index: number) {
+  if (selection.value[index] == 1) {
+    selection.value[index] = 0;
+  } else {
+    selection.value[index] = 1;
+  }
+}
 watch(selection, () => {
   emit("select", selection.value);
 });
@@ -19,24 +26,30 @@ watch(
   }
 );
 const getButtonColor = (buttonId: number) => {
-  if (buttonId == selection.value) {
+  if (selection.value[buttonId] == 1) {
     return "timeButton_pressed";
   }
   return "timeButton";
 };
 </script>
 <template>
-  <div class="container">
+  <div class="containerItem">
     <h2>{{ getDayName(props.day) }}</h2>
     <div class="containerButtons">
-      <button :class="getButtonColor(0)" @click="selection = 0">בוקר</button>
-      <button :class="getButtonColor(1)" @click="selection = 1">צהריים</button>
-      <button :class="getButtonColor(2)" @click="selection = 2">ערב</button>
+      <button :class="getButtonColor(0)" @click="changeSelection(0)">
+        בוקר
+      </button>
+      <button :class="getButtonColor(1)" @click="changeSelection(1)">
+        צהריים
+      </button>
+      <button :class="getButtonColor(2)" @click="changeSelection(2)">
+        ערב
+      </button>
     </div>
   </div>
 </template>
 <style scoped>
-.container,
+.containerItem,
 .containerButtons {
   display: flex;
   flex-direction: row-reverse;
@@ -45,13 +58,14 @@ const getButtonColor = (buttonId: number) => {
 .containerButtons {
   justify-content: space-evenly;
   width: 70%;
+  padding-left: 5px;
 }
-.container {
+.containerItem {
   justify-content: space-between;
   background-color: white;
   margin: 5px;
-  border-radius: 4px;
-  padding: 10px;
+  border-radius: 7px;
+  padding-right: 10px;
 }
 .timeButton,
 .timeButton_pressed {
@@ -66,10 +80,12 @@ const getButtonColor = (buttonId: number) => {
   background-color: #979797;
 }
 .timeButton_pressed {
-  background-color: #6c88e2;
+  background-color: #6629f6;
+  color: white;
+  font-weight: bold;
 }
 .timeButton_pressed:hover {
-  background-color: #526ecc;
+  background-color: #531cd4;
 }
 
 h2 {

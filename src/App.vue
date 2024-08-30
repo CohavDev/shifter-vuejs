@@ -3,19 +3,19 @@ import WeekList from "./components/WeekList.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img
       alt="Vue logo"
       class="logo"
       src="./assets/logo.svg"
       width="48"
       height="48"
-    />
+    /> -->
 
-    <!-- <div class="wrapper">
+  <!-- <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div> -->
-  </header>
+  <!-- </header> -->
 
   <main>
     <WeekList />

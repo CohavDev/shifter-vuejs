@@ -54,7 +54,7 @@ app.post("/api/sendData", async (req, res) => {
     if (client) await client.close();
   }
 });
-app.post("/api/getData", async (req, res) => {
+app.post("/api/readData", async (req, res) => {
   const { date, userName } = req.body;
   var client;
   if (!date || !userName) {
@@ -67,6 +67,12 @@ app.post("/api/getData", async (req, res) => {
     const db = client.db("store");
     const collection = db.collection("shifts");
     const result = await collection.findOne({ date, userName });
+    if (!result) {
+      res.status(404).json({
+        message: "Data not found",
+      });
+      return;
+    }
     res.status(200).json({
       message: "Data retrieved succesfully",
       id: result.insertedId,

@@ -21,6 +21,9 @@ watch(isChecked, () => {
   </div>
 </template>
 <style scoped>
+p {
+  color: white;
+}
 /* The switch - the container */
 .switch {
   position: relative;
