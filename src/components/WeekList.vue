@@ -137,6 +137,7 @@ fetchData();
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center horizontally */
+  margin: 10px;
 }
 .header {
   display: flex;

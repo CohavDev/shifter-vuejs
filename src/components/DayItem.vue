@@ -49,6 +49,11 @@ const getButtonColor = (buttonId: number) => {
   </div>
 </template>
 <style scoped>
+@media (max-width: 450px) {
+  h2 {
+    font-size: 1.2rem;
+  }
+}
 .containerItem,
 .containerButtons {
   display: flex;
