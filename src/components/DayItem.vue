@@ -40,10 +40,10 @@ const getButtonColor = (buttonId: number) => {
         בוקר
       </button>
       <button :class="getButtonColor(1)" @click="changeSelection(1)">
-        צהריים
+        ערב
       </button>
       <button :class="getButtonColor(2)" @click="changeSelection(2)">
-        ערב
+        לילה
       </button>
     </div>
   </div>
