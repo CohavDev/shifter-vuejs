@@ -16,3 +16,8 @@ body {
     height: auto;
   }
 }
+:root {
+  --shaul_color: #2196f3;
+  --odeliya_color: #e965d3;
+  --user_color: var(--shaul_color);
+}

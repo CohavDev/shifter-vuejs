@@ -2,12 +2,13 @@
 import { ref, watch, computed } from "vue";
 
 const emit = defineEmits(["select"]);
-const props = defineProps(["day", "value"]);
+const props = defineProps(["day", "value", "otherSelection"]);
 const getDayName = (id: number) => {
   const days = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
   return days[id - 1];
 };
 const selection = ref(props.value); // [X,X,X]
+const otherSelection = ref(props.otherSelection);
 function changeSelection(index: number) {
   if (selection.value[index] == 1) {
     selection.value[index] = 0;
@@ -25,11 +26,24 @@ watch(
     selection.value = props.value;
   }
 );
-const getButtonColor = (buttonId: number) => {
-  if (selection.value[buttonId] == 1) {
-    return "timeButton_pressed";
+watch(
+  () => props.otherSelection,
+  () => {
+    console.log("props otherSelection changed");
+    otherSelection.value = props.otherSelection;
   }
-  return "timeButton";
+);
+const getButtonColor = (buttonId: number) => {
+  var className = "timeButton ";
+  //check current user selection
+  if (selection.value[buttonId] == 1) {
+    className = "timeButton_pressed ";
+  }
+  //check other user selection
+  if (otherSelection.value[buttonId] == 1) {
+    className += "timeButton_other_selected ";
+  }
+  return className;
 };
 </script>
 <template>
@@ -88,6 +102,9 @@ const getButtonColor = (buttonId: number) => {
   background-color: #6629f6;
   color: white;
   font-weight: bold;
+}
+.timeButton_other_selected {
+  border: 4px solid var(--user_color);
 }
 .timeButton_pressed:hover {
   background-color: #531cd4;

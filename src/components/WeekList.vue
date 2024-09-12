@@ -9,7 +9,9 @@ import Loading from "./Loading.vue";
 import DateHeader from "./DateHeader.vue";
 import Toast from "./Toast.vue";
 
-const userName = ref("Odeliya");
+const users = ["Odeliya", "Shaul"];
+const userIndexSelection = ref(0);
+const userName = ref(users[userIndexSelection.value]);
 const weeksOffset = ref(0);
 const fetchedDates = ref(getDates(weeksOffset.value));
 const sundayDateFormatted = computed(
@@ -18,7 +20,7 @@ const sundayDateFormatted = computed(
 const saturadayFormatted = computed(
   () => fetchedDates.value.saturadayFormatted
 );
-const selection = ref([
+const defaultSelection = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
@@ -26,10 +28,13 @@ const selection = ref([
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0],
-]);
+];
+const selection = ref(defaultSelection);
+const otherSelection = ref(defaultSelection);
 const dbMessage = ref("");
 const loading = ref(true);
-watch(userName, () => {
+watch(userIndexSelection, () => {
+  userName.value = users[userIndexSelection.value];
   fetchData();
 });
 watch(weeksOffset, () => {
@@ -67,10 +72,21 @@ function sendSelection() {
 }
 async function fetchData() {
   loading.value = true;
+  //fetch current user data
   await getData(sundayDateFormatted.value, userName.value)
     .then((data) => {
       console.log("selection", data);
       selection.value = data;
+    })
+    .catch(() => {
+      console.log("failed reading data from server");
+    });
+  //fetch other users data
+  const otherUserIndex = (userIndexSelection.value + 1) % 2;
+  await getData(sundayDateFormatted.value, users[otherUserIndex])
+    .then((data) => {
+      console.log("otherSelection", data);
+      otherSelection.value = data;
       loading.value = false;
     })
     .catch(() => {
@@ -87,42 +103,49 @@ fetchData();
     @prevWeek="() => weeksOffset--"
   />
   <Loading :isVisible="loading" />
-  <Switch @change="(val:string) => (userName = val)" />
+  <Switch @change="(val:number) => (userIndexSelection = val)" />
   <div class="container">
     <DayItem
       day="1"
       @select="(sel) => selectByDay(1, sel)"
       :value="selection[0]"
+      :otherSelection="otherSelection[0]"
     />
     <DayItem
       day="2"
       @select="(sel) => selectByDay(2, sel)"
       :value="selection[1]"
+      :otherSelection="otherSelection[1]"
     />
     <DayItem
       day="3"
       @select="(sel) => selectByDay(3, sel)"
       :value="selection[2]"
+      :otherSelection="otherSelection[2]"
     />
     <DayItem
       day="4"
       @select="(sel) => selectByDay(4, sel)"
       :value="selection[3]"
+      :otherSelection="otherSelection[3]"
     />
     <DayItem
       day="5"
       @select="(sel) => selectByDay(5, sel)"
       :value="selection[4]"
+      :otherSelection="otherSelection[4]"
     />
     <DayItem
       day="6"
       @select="(sel) => selectByDay(6, sel)"
       :value="selection[5]"
+      :otherSelection="otherSelection[5]"
     />
     <DayItem
       day="7"
       @select="(sel) => selectByDay(7, sel)"
       :value="selection[6]"
+      :otherSelection="otherSelection[6]"
     />
     <v-btn variant="outlined" class="send_btn" @click="sendSelection"
       >שלח נתונים</v-btn

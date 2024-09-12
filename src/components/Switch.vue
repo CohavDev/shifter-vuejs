@@ -3,12 +3,21 @@ import { ref, watch } from "vue";
 
 const isChecked = ref(false);
 const emit = defineEmits(["change"]);
+
+const shaul_color = getComputedStyle(document.documentElement)
+  .getPropertyValue("--shaul_color")
+  .trim();
+const odeliya_color = getComputedStyle(document.documentElement)
+  .getPropertyValue("--odeliya_color")
+  .trim();
 function getUserName() {
   return isChecked.value ? "Shaul" : "Odeliya";
 }
 watch(isChecked, () => {
   console.log("switch clicked");
-  emit("change", getUserName());
+  const userColor = isChecked.value ? odeliya_color : shaul_color;
+  document.documentElement.style.setProperty("--user_color", userColor);
+  emit("change", Number(isChecked.value));
 });
 </script>
 <template>
@@ -17,7 +26,7 @@ watch(isChecked, () => {
       <input type="checkbox" v-model="isChecked" />
       <span class="slider"></span>
     </label>
-    <p>Logged in as {{ isChecked ? "Shaul" : "Odeliya" }}</p>
+    <p>Logged in as {{ getUserName() }}</p>
   </div>
 </template>
 <style scoped>
