@@ -3,8 +3,6 @@ import cors from "cors";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 dotenv.config();
-const MONGODB_URI =
-  "mongodb+srv://shaulc:admin1234@cluster0.ywdnz4v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const app = express();
 app.use(
   cors({
@@ -26,8 +24,8 @@ app.post("/api/sendData", async (req, res) => {
     return res.status(400).json({ message: "Missing required fields" });
   }
   try {
-    console.log("env var = ", MONGODB_URI);
-    client = new MongoClient(MONGODB_URI);
+    // console.log("env var = ", MONGODB_URI);
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
     const db = client.db("store");
     const collection = db.collection("shifts");
@@ -61,8 +59,7 @@ app.post("/api/readData", async (req, res) => {
     return res.status(400).json({ message: "Missing required fields" });
   }
   try {
-    console.log("env var = ", MONGODB_URI);
-    client = new MongoClient(MONGODB_URI);
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
     const db = client.db("store");
     const collection = db.collection("shifts");
